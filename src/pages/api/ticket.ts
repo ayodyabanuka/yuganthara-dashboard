@@ -31,7 +31,7 @@ export default async function handler(
   <div style="max-width: 600px; margin: 0 auto; background-color: #FFF8A8; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
     
     <div style="text-align: center; padding: 20px;">
-      <h1 style="font-size: 24px; font-weight: bold; color: #2a5d8f;">Confirmation of Your </br>Yuganthara Ticket Purchase</h1>
+      <h1 style="font-size: 30px; font-weight: bold; color: #2a5d8f;">Confirmation of Your <br/> Yuganthara Ticket Purchase</h1>
     </div>
 
     <div style="padding: 20px; text-align: center;">
@@ -39,19 +39,19 @@ export default async function handler(
       <p style="font-size: 13px; font-weight: bold; margin-bottom: 10px;">Hi ${name},</p>
       <p style="font-size: 11px; margin-bottom: 20px; color: #333333;">
         Your booking has been confirmed. 
-        </br>Thank you for purchase, we hope that you enjoy the event!
+        <br/> Thank you for purchase, we hope that you enjoy the event!
       </p>
       </div>
 
       <p style="font-size: 12px; color: #333333;">
         Following are the completed details of your booking
       </p>
-      <p style="font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 20px;">Your eTicket Code: ${ref}</p>
+      <p style="font-size: 18px; font-weight: bold; color: #333333; margin-bottom: 20px;">Your eTicket Code: <br/> ${ref}</p>
 
       <div>
       <div style="background-color: #2a5d8f; color: #ffffff; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
-        <h3 style="font-size: 18px; margin-bottom: 10px;">Details</h3>
-        <p><strong>Event on:</strong> Sun, 29 Dec 2024, Time: 2:30pm </p>
+        <h3 style="font-size: 18px; margin-bottom: 10px; color: #ffffff;">Details</h3>
+        <p style="color: #ffffff;"><strong>Event on:</strong> Sun, 29 Dec 2024, Time: 2:30pm </p>
         <p>
         <strong>Seats:</strong>
           ${seats
@@ -64,7 +64,7 @@ export default async function handler(
       </div>
 
       <div style="margin: 20px 0;">
-        <img src="${qrcode}" alt="QR Code" style="width: 150px; height: 150px;">
+        <img src="${qrcode}" alt="QR Code" style="width: 250px; height: 250px;">
       </div>
 
       <p>You will need this QR code to enter to the event</p>
