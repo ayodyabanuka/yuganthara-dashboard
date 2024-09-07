@@ -113,7 +113,7 @@ const Reservation = () => {
                       {reservation.seats.length}
                     </td>
                     <td className="border-b border-slate-700 px-4 py-2  text-center">
-                      {reservation.bookedAt.toString()}
+                      {new Date(Number(reservation.bookedAt)).toString()}
                     </td>
 
                     <td className="border-b border-slate-700 px-4 py-2  text-center">
@@ -137,7 +137,7 @@ const Reservation = () => {
                       {reservation.seats.length}
                     </td>
                     <td className="border-b border-slate-700 px-4 py-2  text-center">
-                      {reservation.bookedAt.toString()}
+                      {new Date(Number(reservation.bookedAt)).toString()}
                     </td>
 
                     <td className="border-b border-slate-700 px-4 py-2  text-center">

@@ -15,4 +15,5 @@ export interface Reservation {
   bookedAt: Date;
   paymentSlip: string;
   status: string;
+  qrCodeURL: string;
 }

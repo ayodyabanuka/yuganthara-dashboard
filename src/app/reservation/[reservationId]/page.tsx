@@ -4,6 +4,8 @@ import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useParams } from 'next/navigation';
 import { Reservation } from '@/types/reservations.type';
 import { db } from '@/app/utils/firebase';
+import Image from 'next/image';
+import generateAndSaveQRCode from '@/app/utils/genarateQRCode';
 
 const ReservationDetailsPage: React.FC = () => {
   const params = useParams();
@@ -17,6 +19,9 @@ const ReservationDetailsPage: React.FC = () => {
       try {
         const docRef = doc(db, 'bookings', reservationId as string);
         const docSnap = await getDoc(docRef);
+
+        generateAndSaveQRCode(reservationId as string);
+
 
         if (docSnap.exists()) {
           setReservation({ id: docSnap.id, ...docSnap.data() } as Reservation);
@@ -35,29 +40,31 @@ const ReservationDetailsPage: React.FC = () => {
     }
   }, [reservationId]);
 
-  // const handleReservationStatusChange = async (
-  //   userEmail: string,
-  //   ReservationDetails: Reservation,
-  //   status: string
-  // ) => {
-  //   try {
-  //     const response = await fetch('/api/sendOrderStatusEmail', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ userEmail, ReservationDetails, status })
-  //     });
+  const handleOrderSubmission = async (ref: string, qr: string) => {
+    try {
+      const response = await fetch('/api/ticket', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userEmail: reservation?.email, // Replace with the user's email
+          qrcode: qr,
+          name: reservation?.name,
+          ref: ref,
+          seats: reservation?.seats
+        })
+      });
+      if (response.ok) {
+        console.log('Email sent successfully');
+      } else {
+        console.error('Failed to send email');
+      }
 
-  //     if (response.ok) {
-  //       console.log('Status email sent successfully');
-  //     } else {
-  //       console.error('Failed to send status email');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating order status:', error);
-  //   }
-  // };
+    } catch (error) {
+      console.error('Error submitting order:', error);
+    }
+  };
 
   const handleChangeStatus = async (
     newStatus: 'pending' | 'processing' | 'completed' | 'canceled'
@@ -74,10 +81,14 @@ const ReservationDetailsPage: React.FC = () => {
         setReservation(null); // Reset the reservation after deletion
       } else {
         // Update the status for other states
+
         await updateDoc(docRef, { status: newStatus });
         setStat(newStatus);
         setReservation({ ...reservation, status: newStatus });
-        // await handleReservationStatusChange(reservation.email, reservation, newStatus);
+
+        if (newStatus === 'completed') {
+          await handleOrderSubmission(reservation.id, reservation.qrCodeURL);
+        }
       }
 
     } catch (error) {
@@ -161,6 +172,12 @@ const ReservationDetailsPage: React.FC = () => {
               </button>
             )
           )}
+        </div>
+        <div className='mt-10'>
+          <div className='my-4'>
+            QR Code
+          </div>
+          <Image src={reservation.qrCodeURL} alt={''} height={200} width={200} />
         </div>
       </div>
     </div>

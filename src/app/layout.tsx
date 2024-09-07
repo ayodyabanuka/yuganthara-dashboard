@@ -4,8 +4,7 @@ import './globals.css';
 import ProtectedRoute from '@/components/protected-route';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaTshirt } from 'react-icons/fa';
-import { FaPeopleRoof } from 'react-icons/fa6';
+import { FaPeopleRoof, FaTicket } from 'react-icons/fa6';
 import { IoMdAnalytics } from 'react-icons/io';
 import { IoLogOut } from 'react-icons/io5';
 import { usePathname, useRouter } from 'next/navigation';
@@ -62,7 +61,7 @@ export default function RootLayout({
                   href={'/reservation'}
                   className={`flex  w-full items-center gap-2 rounded-xl p-2 py-3 text-center text-slate-400 hover:bg-slate-800 ${path === '/reservation' ? 'bg-slate-800' : 'text-slate-400'}`}
                 >
-                  <FaTshirt /> Reservation
+                  <FaTicket /> Reservation
                 </Link>
               </div>
               <div className="w-full px-2 py-2 font-light text-slate-500">
