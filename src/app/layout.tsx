@@ -1,16 +1,17 @@
 'use client';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import ProtectedRoute from '@/components/protected-route';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaPeopleRoof, FaTicket } from 'react-icons/fa6';
+import { FaPeopleRoof, FaQrcode, FaTicket } from 'react-icons/fa6';
 import { IoMdAnalytics } from 'react-icons/io';
 import { IoLogOut } from 'react-icons/io5';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 const inter = Inter({ subsets: ['latin'] });
 import Cookies from 'js-cookie';
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store';
 
 export default function RootLayout({
   children
@@ -35,7 +36,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/logo1.png" type="image/x-icon" />
       </head>
       <body className={`${inter.className} min-h-screen w-full bg-gray-900`}>
-        <ProtectedRoute>
+        <Provider store={store}>
           <main
             className={`${path === '/login' ? 'hidden' : 'block'} flex min-h-screen w-full`}
           >
@@ -65,7 +66,14 @@ export default function RootLayout({
                 >
                   <FaTicket /> Reservation
                 </Link>
+                <Link
+                  href={'/qr-scanner'}
+                  className={`flex  w-full items-center gap-2 rounded-xl p-2 py-3 text-center text-slate-400 hover:bg-slate-800 ${path === '/qr-scanner' ? 'bg-slate-800' : 'text-slate-400'}`}
+                >
+                  <FaQrcode /> QR Scanner
+                </Link>
               </div>
+
               <div className="w-full px-2 py-2 font-light text-slate-500">
                 Settings
               </div>
@@ -93,7 +101,7 @@ export default function RootLayout({
           <div className={`${path === '/login' ? 'block' : 'hidden'}`}>
             {children}
           </div>
-        </ProtectedRoute>
+        </Provider>
       </body>
     </html>
   );

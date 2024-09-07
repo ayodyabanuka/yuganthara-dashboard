@@ -1,14 +1,18 @@
 'use client';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+
 import { db } from '../utils/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import { login } from '@/redux/authSlice';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,15 +22,21 @@ const Login: React.FC = () => {
     const userDoc = await getDoc(userDocRef);
 
     if (!userDoc.exists()) {
-      throw new Error('Invalid email or password');
+      setError('Invalid email or password');
+      return;
     }
 
     const userData = userDoc.data();
 
     if (userData.password !== password) {
-      throw new Error('Invalid email or password');
+      setError('Invalid email or password');
+      return;
     }
-    Cookies.set('token', email);
+
+    const token = email;
+    Cookies.set('token', token);
+
+    dispatch(login({ email, token }));
     router.push('/');
   };
 

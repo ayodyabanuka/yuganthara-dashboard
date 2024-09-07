@@ -26,7 +26,10 @@ const Overview = () => {
           (total, doc) => total + doc.data().seats.length,
           0
         );
-        const soldTicketsCount = soldSnapshot.docs.length;
+        const soldTicketsCount = soldSnapshot.docs.reduce(
+          (total, doc) => total + doc.data().seats.length,
+          0
+        );
         const totalEarningsAmount = soldTicketsCount * 1000; // Assuming each ticket is 1000 LKR
 
         setReservedSeats(reservedSeatsCount);
