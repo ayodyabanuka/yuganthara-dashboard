@@ -31,7 +31,9 @@ export default function RootLayout({
   };
   return (
     <html lang="en">
-      <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+      <head>
+        <link rel="shortcut icon" href="/logo1.png" type="image/x-icon" />
+      </head>
       <body className={`${inter.className} min-h-screen w-full bg-gray-900`}>
         <ProtectedRoute>
           <main
